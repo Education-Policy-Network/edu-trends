@@ -14,30 +14,213 @@
         table { border-collapse: collapse; width: 100%; min-width: 600px; }
         th, td { border: 1px solid #e2e8f0; padding: 12px; font-size: 0.875rem; }
         th { background-color: #f8fafc; font-weight: 700; text-align: center; }
+
+        /* 검색 영역 */
+        .search-section {
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1.5rem 2.5rem;
+        }
+        @media (min-width: 768px) {
+            .search-section { padding: 2rem 3rem; }
+        }
+        .search-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #6366f1;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.6rem;
+        }
+        .search-input-wrap {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .search-input {
+            flex: 1;
+            padding: 0.65rem 1rem;
+            font-size: 0.95rem;
+            font-family: 'Pretendard', sans-serif;
+            border: 1.5px solid #c7d2fe;
+            border-radius: 0.75rem;
+            background: #fff;
+            color: #1e293b;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .search-input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
+        }
+        .search-clear {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: #94a3b8;
+            padding: 0.3rem 0.5rem;
+            border-radius: 0.5rem;
+            transition: color 0.15s;
+            display: none;
+        }
+        .search-clear:hover { color: #6366f1; }
+        .search-filter-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-right: 0.25rem;
+        }
+        .filter-btn {
+            padding: 0.3rem 0.85rem;
+            border-radius: 999px;
+            border: 1.5px solid #e2e8f0;
+            background: #fff;
+            font-size: 0.78rem;
+            font-family: 'Pretendard', sans-serif;
+            font-weight: 700;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .filter-btn.on {
+            background: #eef2ff;
+            border-color: #a5b4fc;
+            color: #4f46e5;
+        }
+        .filter-btn:hover:not(.on) {
+            border-color: #c7d2fe;
+            color: #6366f1;
+        }
+
+        /* 검색 결과 패널 */
+        #search-result-panel {
+            display: none;
+            padding: 1.5rem 2.5rem 2rem;
+        }
+        @media (min-width: 768px) {
+            #search-result-panel { padding: 2rem 3rem 2.5rem; }
+        }
+        .result-count {
+            font-size: 0.82rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .result-count strong { color: #1e293b; font-weight: 700; }
+        .result-item {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            padding: 0.85rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .result-item:last-child { border-bottom: none; }
+        .result-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            min-width: 68px;
+            flex-shrink: 0;
+        }
+        .badge {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .badge-year { background: #e2e8f0; color: #475569; }
+        .badge-period { background: #f1f5f9; color: #64748b; }
+        .badge-trend { background: #ecfdf5; color: #059669; }
+        .badge-info { background: #fffbeb; color: #d97706; }
+        .badge-org { background: #f8fafc; color: #94a3b8; }
+        .result-title {
+            font-size: 0.875rem;
+            color: #1e293b;
+            line-height: 1.65;
+            flex: 1;
+        }
+        mark {
+            background: #fef08a;
+            color: inherit;
+            border-radius: 2px;
+            padding: 0 1px;
+        }
+        .no-result {
+            text-align: center;
+            padding: 2.5rem 0;
+            color: #94a3b8;
+            font-size: 0.875rem;
+            line-height: 1.8;
+        }
+        .no-result .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .search-placeholder {
+            text-align: center;
+            padding: 1.5rem 0 0.5rem;
+            color: #cbd5e1;
+            font-size: 0.82rem;
+        }
     </style>
 </head>
 <body class="bg-slate-50 p-4 md:p-12">
 
     <div class="max-w-6xl mx-auto bg-white shadow-2xl rounded-[3rem] overflow-hidden border border-slate-200">
+
+        <!-- 헤더 -->
         <header class="p-8 md:p-12 border-b border-slate-100 bg-white">
             <h1 class="text-2xl md:text-4xl font-black text-slate-900 mb-6 leading-tight">
                 2026년 2분기 <br class="hidden md:block"> 교육정책네트워크 발간물 주제 요구조사
             </h1>
-            
             <div class="bg-indigo-50 border-l-8 border-indigo-500 p-6 md:p-8 rounded-r-3xl shadow-sm">
                 <p class="text-slate-800 text-base md:text-lg leading-relaxed mb-4">
                     본 조사는 교육 현장의 생생한 목소리를 발간물에 담기 위한 조사입니다. <br class="hidden md:block">
-                    <span class="font-bold text-indigo-700">기 발간된 주제와의 중복을 예방하고 보다 참신한 과제를 발굴하기 위해</span>, 
+                    <span class="font-bold text-indigo-700">기 발간된 주제와의 중복을 예방하고 보다 참신한 과제를 발굴하기 위해</span>,
                     아래와 같이 기존 <span class="font-bold text-indigo-700">발간물 목록</span>을 제공하오니 참고하여 제안해 주시기 바랍니다.
                 </p>
             </div>
         </header>
 
-        <div class="flex border-b border-slate-200 bg-slate-50">
+        <!-- 검색 영역 -->
+        <div class="search-section">
+            <div class="search-label">기발간 주제 검색</div>
+            <div class="search-input-wrap">
+                <input
+                    class="search-input"
+                    id="search-input"
+                    type="text"
+                    placeholder="제안하실 주제 키워드를 입력해 중복 여부를 확인하세요 (예: AI, 학부모, 진로...)"
+                    autocomplete="off"
+                >
+                <button class="search-clear" id="search-clear" title="지우기">✕</button>
+            </div>
+            <div class="search-filter-row">
+                <span class="filter-label">발간물 유형</span>
+                <button class="filter-btn on" data-filter="all">전체</button>
+                <button class="filter-btn" data-filter="trend">해외교육동향 기획기사</button>
+                <button class="filter-btn" data-filter="info">세계교육 리포트</button>
+            </div>
+        </div>
+
+        <!-- 검색 결과 패널 -->
+        <div id="search-result-panel">
+            <div class="result-count" id="result-count"></div>
+            <div id="result-list"></div>
+        </div>
+
+        <!-- 탭 버튼 -->
+        <div class="flex border-b border-slate-200 bg-slate-50" id="tab-bar">
             <button onclick="openTab(event, 'trend')" class="tab-btn active flex-1 py-5 text-sm md:text-lg font-bold text-slate-400 hover:text-indigo-600 transition-all uppercase tracking-tighter">해외교육동향 기획기사 목록</button>
             <button onclick="openTab(event, 'info')" class="tab-btn flex-1 py-5 text-sm md:text-lg font-bold text-slate-400 hover:text-indigo-600 transition-all uppercase tracking-tighter">세계교육 리포트 목록</button>
         </div>
 
+        <!-- 기획기사 탭 -->
         <div id="trend" class="tab-content active p-4 md:p-10">
             <div class="overflow-x-auto rounded-xl border border-slate-100">
                 <table>
@@ -90,6 +273,7 @@
             </div>
         </div>
 
+        <!-- 리포트 탭 -->
         <div id="info" class="tab-content p-4 md:p-10">
             <div class="overflow-x-auto rounded-xl border border-slate-100">
                 <table>
@@ -100,7 +284,6 @@
                         <tr class="bg-slate-50"><td rowspan="3" class="text-center font-bold">2026</td><td class="text-center">1호(예정)</td><td>네덜란드의 경계선 지능 학생을 위한 실무교육(PrO) 운영 사례</td><td class="text-center">편집위원회</td></tr>
                         <tr class="bg-slate-50"><td class="text-center">2호(예정)</td><td>스웨덴의 교내 디지털 기기 사용 제한 정책과 시사점</td><td class="text-center">자문단</td></tr>
                         <tr class="bg-slate-50"><td class="text-center">3호(예정)</td><td>에스토니아의 미래 교육전략: 「교육전략 2035」를 중심으로</td><td class="text-center">경기도교육청</td></tr>
-                        
                         <tr><td rowspan="11" class="text-center font-bold border-t-2">2025</td><td class="text-center">1호</td><td>독일의 지속가능발전교육(ESD) 현황과 시사점</td><td class="text-center">서울교육청</td></tr>
                         <tr><td class="text-center">2호</td><td>독일 수월성 교육 사례: 공동 전략 프로젝트 LemaS를 중심으로</td><td class="text-center">자문단</td></tr>
                         <tr><td class="text-center">3호</td><td>스웨덴의 기후 변화교육과 청소년 환경 행동 사례</td><td class="text-center">자문단</td></tr>
@@ -112,7 +295,6 @@
                         <tr><td class="text-center">9호</td><td>독일의 수습교사제 및 선임교사제 운영 현황과 변화 추이</td><td class="text-center">자문단</td></tr>
                         <tr><td class="text-center">10호</td><td>중국의 인공지능 인재양성 전략 및 시사점</td><td class="text-center">자문단</td></tr>
                         <tr><td class="text-center">11호</td><td>주요국의 사립교직원 재해보상체계 사례</td><td class="text-center">교육부</td></tr>
-
                         <tr class="bg-slate-50"><td rowspan="10" class="text-center font-bold border-t-2">2024</td><td class="text-center">1호</td><td>싱가포르의 에듀테크 및 AI 교육정책</td><td class="text-center">교육부</td></tr>
                         <tr class="bg-slate-50"><td class="text-center">2호</td><td>독일 학교시설 복합화 및 개방 정책 사례와 시사점</td><td class="text-center">자문단</td></tr>
                         <tr class="bg-slate-50"><td class="text-center">3호</td><td>미국의 청소년 약물 노출, 관련 범죄 대응 정책 운영 현황</td><td class="text-center">자문단</td></tr>
@@ -123,7 +305,6 @@
                         <tr class="bg-slate-50"><td class="text-center">8호</td><td>일본 IB 교육과정 학교의 교사 업무 분석</td><td class="text-center">자문단</td></tr>
                         <tr class="bg-slate-50"><td class="text-center">9호</td><td>미국, 호주의 학교 내 사회정서학습(SEL) 프로그램 운영 사례</td><td class="text-center">자문단</td></tr>
                         <tr class="bg-slate-50"><td class="text-center">10호</td><td>일본의 이주배경학생 사회진출 지원 프로그램 사례</td><td class="text-center">자문단</td></tr>
-                        
                         <tr><td rowspan="7" class="text-center font-bold border-t-2">2023</td><td class="text-center">3호</td><td>영국의 초중등학교 EdTech 현황과 시사점</td><td class="text-center">자문단</td></tr>
                         <tr><td class="text-center">4호</td><td>중국 대입에서의 논술형 시험 실시 현황 및 시사점</td><td class="text-center">편집위원회</td></tr>
                         <tr><td class="text-center">5호</td><td>핀란드의 디지털 웰빙을 위한 미디어 교육 운영 프로그램</td><td class="text-center">자문단</td></tr>
@@ -143,20 +324,178 @@
     </div>
 
     <script>
+        /* ── 탭 전환 ── */
         function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-                tabcontent[i].classList.remove("active");
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.style.display = 'none';
+                el.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabName).style.display = 'block';
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        /* ── 검색 데이터 ── */
+        const DATA = [
+            {type:'trend',year:2026,period:'1월',title:'이공계 기술인재 양성을 위한 진로교육',org:'자문단'},
+            {type:'trend',year:2026,period:'2월',title:'AI 시대 인성 및 사회정서학습(SEL)',org:'자문단'},
+            {type:'trend',year:2026,period:'3월(예정)',title:'학부모 소양교육',org:'자문단'},
+            {type:'trend',year:2026,period:'4월(예정)',title:'학교급식 관리 및 운영',org:'자문단'},
+            {type:'trend',year:2025,period:'1월',title:'학생 흡연, 온라인 도박 예방 교육 현황 및 규제방안',org:'서울교육청'},
+            {type:'trend',year:2025,period:'2월',title:'교육 관련 박물관 및 전시관 운영 현황',org:'교육부'},
+            {type:'trend',year:2025,period:'3월',title:'지속가능성과 사회적 책임을 중심으로 한 ESG 교육정책 현황',org:'서울교육청'},
+            {type:'trend',year:2025,period:'4월',title:'경제·금융교육 운영 현황',org:'자문단'},
+            {type:'trend',year:2025,period:'5월',title:'교원 정신건강 지원 및 관리 대책',org:'교육부/자문단'},
+            {type:'trend',year:2025,period:'6월',title:'현장체험학습 안전 지도와 사고 대응 방안',org:'자문단'},
+            {type:'trend',year:2025,period:'7월',title:'청소년 디지털 기기 및 SNS 규제 현황',org:'자문단'},
+            {type:'trend',year:2025,period:'8월',title:'시민교육 현황',org:'교육부'},
+            {type:'trend',year:2025,period:'9월',title:'학교체육·예술교육 현황',org:'교육부'},
+            {type:'trend',year:2025,period:'10월',title:'교사의 정치적 기본권 보장 현황',org:'자문단'},
+            {type:'trend',year:2025,period:'11월',title:'초중등 통합운영학교 운영 현황',org:'자문단'},
+            {type:'trend',year:2025,period:'12월',title:'생성형 AI 기반 질문 중심 수업 운영 사례',org:'자문단'},
+            {type:'trend',year:2024,period:'1월',title:'학교 안 인력 구성 및 담당 업무 현황',org:'자문단'},
+            {type:'trend',year:2024,period:'2월',title:"교육과정 속 'White Space' 운영 사례",org:'경북교육청'},
+            {type:'trend',year:2024,period:'3월',title:'학생 정신건강 증진 및 사회정서능력 함양 정책',org:'교육부'},
+            {type:'trend',year:2024,period:'4월',title:'학교 내 학교폭력 사안조사 방법 및 전담조사관 제도',org:'자문단'},
+            {type:'trend',year:2024,period:'5월',title:'학교 내 장애학생 대상 의료지원 체계',org:'교육부'},
+            {type:'trend',year:2024,period:'6월',title:'각국의 교육박람회 개최 현황',org:'편집위원회'},
+            {type:'trend',year:2024,period:'7월',title:'교육정책 평가 및 모니터링 체계',org:'자문단'},
+            {type:'trend',year:2024,period:'8월',title:'퇴직전문인력을 고려한 교육현장 지원 정책 사례',org:'교육부'},
+            {type:'trend',year:2024,period:'9월',title:'폐교의 양상, 기준 및 폐교 이후 활용 사례',org:'자문단'},
+            {type:'trend',year:2024,period:'10월',title:'외국 국적 학생의 학적 및 성적 관리 체계',org:'자문단'},
+            {type:'trend',year:2024,period:'11월',title:'AI 활용 범죄 예방과 해결을 위한 정책 및 교육 사례',org:'자문단'},
+            {type:'trend',year:2024,period:'12월',title:'기초학력지원을 위한 집중학년제 및 1수업 2교사제 운영 현황',org:'교육부'},
+            {type:'trend',year:2023,period:'1월',title:'학부모의 학교 참여 활동 현황',org:'편집위원회'},
+            {type:'trend',year:2023,period:'2월',title:'지속가능발전교육 현황',org:'자문단'},
+            {type:'trend',year:2023,period:'3월',title:'대학 입시부정 현황 및 모니터링 체계',org:'교육부'},
+            {type:'trend',year:2023,period:'4월',title:'미이수 과목의 재이수 제도 현황',org:'편집위원회'},
+            {type:'trend',year:2023,period:'5월',title:'인공지능(AI) 기반 맞춤형 교육을 위한 정책과 사례',org:'자문단'},
+            {type:'trend',year:2023,period:'6월',title:'영유아 교육 및 보육 체계',org:'교육부'},
+            {type:'trend',year:2023,period:'7월',title:'교육데이터 개방·활용 정책 현황',org:'교육부'},
+            {type:'trend',year:2023,period:'8월',title:'청소년 약물 오남용 현황 및 예방 정책',org:'자문단'},
+            {type:'trend',year:2023,period:'9월',title:'아동학대 정책 현황과 학교 현장 적용에서의 쟁점',org:'자문단'},
+            {type:'trend',year:2023,period:'10월',title:'한국어 교육 체계 및 현황',org:'교육부'},
+            {type:'trend',year:2023,period:'11월',title:'학교의 학부모 민원 대응 체제 및 사례',org:'자문단'},
+            {type:'trend',year:2023,period:'12월',title:'국제 바칼로레아(IB) 프로그램 도입 및 운영 현황',org:'교육부'},
+            {type:'info',year:2026,period:'1호(예정)',title:'네덜란드의 경계선 지능 학생을 위한 실무교육(PrO) 운영 사례',org:'편집위원회'},
+            {type:'info',year:2026,period:'2호(예정)',title:'스웨덴의 교내 디지털 기기 사용 제한 정책과 시사점',org:'자문단'},
+            {type:'info',year:2026,period:'3호(예정)',title:'에스토니아의 미래 교육전략: 「교육전략 2035」를 중심으로',org:'경기도교육청'},
+            {type:'info',year:2025,period:'1호',title:'독일의 지속가능발전교육(ESD) 현황과 시사점',org:'서울교육청'},
+            {type:'info',year:2025,period:'2호',title:'독일 수월성 교육 사례: 공동 전략 프로젝트 LemaS를 중심으로',org:'자문단'},
+            {type:'info',year:2025,period:'3호',title:'스웨덴의 기후 변화교육과 청소년 환경 행동 사례',org:'자문단'},
+            {type:'info',year:2025,period:'4호',title:'일본의 교원 정신건강 지원 및 관리 대책',org:'교육부'},
+            {type:'info',year:2025,period:'5호',title:'싱가포르의 IB 인증 및 교육과정 운영 사례',org:'자문단'},
+            {type:'info',year:2025,period:'6호',title:'핀란드의 방과후 돌봄 정책의 특징과 시사점',org:'자문단'},
+            {type:'info',year:2025,period:'7호',title:'영국의 자기주도학습센터 운영 사례 분석',org:'자문단'},
+            {type:'info',year:2025,period:'8호',title:'호주의 EdChat을 활용한 교사 업무 부담 경감 방안',org:'자문단'},
+            {type:'info',year:2025,period:'9호',title:'독일의 수습교사제 및 선임교사제 운영 현황과 변화 추이',org:'자문단'},
+            {type:'info',year:2025,period:'10호',title:'중국의 인공지능 인재양성 전략 및 시사점',org:'자문단'},
+            {type:'info',year:2025,period:'11호',title:'주요국의 사립교직원 재해보상체계 사례',org:'교육부'},
+            {type:'info',year:2024,period:'1호',title:'싱가포르의 에듀테크 및 AI 교육정책',org:'교육부'},
+            {type:'info',year:2024,period:'2호',title:'독일 학교시설 복합화 및 개방 정책 사례와 시사점',org:'자문단'},
+            {type:'info',year:2024,period:'3호',title:'미국의 청소년 약물 노출, 관련 범죄 대응 정책 운영 현황',org:'자문단'},
+            {type:'info',year:2024,period:'4호',title:'일본 특수교육대상 학생의 문제행동 중재 및 지원 현황',org:'교육부'},
+            {type:'info',year:2024,period:'5호',title:'중국의 과학기술 발전과 디지털 AI 교육 정책 동향',org:'자문단'},
+            {type:'info',year:2024,period:'6호',title:'중국 가정교육촉진법의 의의와 시사점',org:'자문단'},
+            {type:'info',year:2024,period:'7호',title:'미국 소년구금시설의 운영 현황과 보호정책',org:'자문단'},
+            {type:'info',year:2024,period:'8호',title:'일본 IB 교육과정 학교의 교사 업무 분석',org:'자문단'},
+            {type:'info',year:2024,period:'9호',title:'미국, 호주의 학교 내 사회정서학습(SEL) 프로그램 운영 사례',org:'자문단'},
+            {type:'info',year:2024,period:'10호',title:'일본의 이주배경학생 사회진출 지원 프로그램 사례',org:'자문단'},
+            {type:'info',year:2023,period:'3호',title:'영국의 초중등학교 EdTech 현황과 시사점',org:'자문단'},
+            {type:'info',year:2023,period:'4호',title:'중국 대입에서의 논술형 시험 실시 현황 및 시사점',org:'편집위원회'},
+            {type:'info',year:2023,period:'5호',title:'핀란드의 디지털 웰빙을 위한 미디어 교육 운영 프로그램',org:'자문단'},
+            {type:'info',year:2023,period:'8호',title:'대만의 유보통합 추진 사례분석',org:'교육부'},
+            {type:'info',year:2023,period:'11호',title:'캐나다의 진로연계교육과정 및 전담인력 확보 정책',org:'서울교육청'},
+            {type:'info',year:2023,period:'12호',title:'독일의 성인학습자의 고등학교 재입학 관련 법제 및 정책',org:'서울교육청'},
+            {type:'info',year:2023,period:'13호',title:'미국의 수업 방해 학생에 대한 학교 대응 체계 및 수업권 보호',org:'자문단'},
+        ];
+
+        /* ── 검색 상태 ── */
+        let activeFilter = 'all';
+
+        /* ── 필터 버튼 ── */
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
+                btn.classList.add('on');
+                activeFilter = btn.dataset.filter;
+                renderSearch();
+            });
+        });
+
+        /* ── 입력 ── */
+        const searchInput = document.getElementById('search-input');
+        const searchClear = document.getElementById('search-clear');
+        const resultPanel = document.getElementById('search-result-panel');
+        const tabBar = document.getElementById('tab-bar');
+
+        searchInput.addEventListener('input', () => {
+            searchClear.style.display = searchInput.value ? 'inline' : 'none';
+            renderSearch();
+        });
+
+        searchClear.addEventListener('click', () => {
+            searchInput.value = '';
+            searchClear.style.display = 'none';
+            renderSearch();
+        });
+
+        function highlight(text, q) {
+            if (!q) return text;
+            const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            return text.replace(new RegExp(escaped, 'gi'), m => '<mark>' + m + '</mark>');
+        }
+
+        function renderSearch() {
+            const q = searchInput.value.trim();
+
+            if (!q) {
+                resultPanel.style.display = 'none';
+                tabBar.style.display = 'flex';
+                document.querySelectorAll('.tab-content.active').forEach(el => el.style.display = 'block');
+                return;
             }
-            tablinks = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
+
+            /* 검색 중엔 테이블 탭 숨기고 결과만 표시 */
+            tabBar.style.display = 'none';
+            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+            resultPanel.style.display = 'block';
+
+            const filtered = DATA.filter(d => {
+                if (activeFilter !== 'all' && d.type !== activeFilter) return false;
+                const qLower = q.toLowerCase();
+                return d.title.toLowerCase().includes(qLower) || String(d.year).includes(q) || d.org.toLowerCase().includes(qLower);
+            });
+
+            const countEl = document.getElementById('result-count');
+            const listEl = document.getElementById('result-list');
+
+            if (filtered.length === 0) {
+                countEl.innerHTML = `<strong>"${q}"</strong>에 해당하는 기발간 주제가 없습니다.`;
+                listEl.innerHTML = `<div class="no-result">
+                    <div class="icon">✅</div>
+                    겹치는 발간물이 없습니다.<br>
+                    <span style="font-size:0.78rem;color:#94a3b8;">해당 키워드로 새로운 주제 제안이 가능합니다.</span>
+                </div>`;
+                return;
             }
-            document.getElementById(tabName).style.display = "block";
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
+
+            countEl.innerHTML = `<strong>"${q}"</strong> 관련 기발간 주제 <strong>${filtered.length}건</strong> — 중복 여부를 확인하세요.`;
+
+            listEl.innerHTML = filtered.map(d => {
+                const srcClass = d.type === 'trend' ? 'badge-trend' : 'badge-info';
+                const srcLabel = d.type === 'trend' ? '기획기사' : '리포트';
+                return `<div class="result-item">
+                    <div class="result-badges">
+                        <span class="badge badge-year">${d.year}</span>
+                        <span class="badge badge-period">${d.period}</span>
+                        <span class="badge ${srcClass}">${srcLabel}</span>
+                        <span class="badge badge-org">${d.org}</span>
+                    </div>
+                    <div class="result-title">${highlight(d.title, q)}</div>
+                </div>`;
+            }).join('');
         }
     </script>
 </body>
